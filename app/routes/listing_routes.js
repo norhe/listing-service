@@ -1,10 +1,18 @@
 module.exports = function(app, db, conf) {
-  
+
+  app.get('/listing/healthz', (req, res) => {
+    res.sendStatus(200)
+  }),
+
   app.get('/listing/:id', (req, res) => {
-    var details = {'listing_id': req.params.listing_id };
+    var details = {'listing_id': req.params.id };
+    console.log("Retrieving record for ", details)
     db.collection(conf.collection).findOne(details, (err, item) => {
+      console.log("found item:", item)
       if (err) {
         res.send({'error': 'Could not retrieve listing from database'})
+      } else if (null == item) {
+        res.send({'error': 'Record not found in database with listing_id = ' + details.listing_id})
       } else {
         res.send(item)
       }
@@ -12,8 +20,9 @@ module.exports = function(app, db, conf) {
   }),
 
   app.get('/listing', (req, res) => {
+    console.log("listing")
     db.collection(conf.collection).find({}, {'_id': false, 'limit':10}).toArray( (err, item) => {
-      if (err) {
+      if (err || null == item) {
         res.send({'error': 'Could not retrieve listing from database'})
       } else {
         res.send(item)
