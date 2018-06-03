@@ -11,8 +11,9 @@ const PORT = process.env.LISTING_PORT || 8000;
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // TODO: add auth later (Vault)
-require('./config/resolveSrv')(db.db_addr, db.db_port).then( (dsn) => {
-  MongoClient.connect(dsn, { useNewUrlParser: true },(err, database) => {
+// require('./config/resolveSrv')(db.db_addr, db.db_port).then( (dsn) => {
+var db_proxy_addr = 'mongodb://localhost:8001'
+MongoClient.connect(db_proxy_addr, { useNewUrlParser: true },(err, database) => {
     if (err) return console.log(err)
 
     // Make sure you add the database name and not the collection name
