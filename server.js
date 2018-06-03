@@ -10,20 +10,28 @@ const PORT = process.env.LISTING_PORT || 8000;
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// TODO: add auth later (Vault)
-// require('./config/resolveSrv')(db.db_addr, db.db_port).then( (dsn) => {
-var db_proxy_addr = 'mongodb://localhost:8001'
-MongoClient.connect(db_proxy_addr, { useNewUrlParser: true },(err, database) => {
-  if (err) return console.log(err)
+function connectDB() {
+  // TODO: add auth later (Vault)
+  // require('./config/resolveSrv')(db.db_addr, db.db_port).then( (dsn) => {
+  var db_proxy_addr = 'mongodb://localhost:8001'
+  MongoClient.connect(db_proxy_addr, { useNewUrlParser: true }, function(err, database) {
+    if (err) {
+      console.log(err)
+      console.log("Waiting 5 seconds and trying again...")
+      setTimeout(connectDB, 5000)
+    } else {
+      app.emit('dbConnected', (database))
+    }
+  })
+}
 
-  // Make sure you add the database name and not the collection name
+connectDB()
+
+app.on('dbConnected', (database) => {
   // TODO: load this from a file or env (consul)
   dbConn = database.db(db.db_name)
   require('./app/routes')(app, dbConn, {collection: db.db_col});
   app.listen(PORT, () => {
     console.log('We are live on ' + PORT);
-  });
+  })
 })
-/*}).catch( (err) => {
-  console.log("An error occurred resolving the DSN" + err)
-})*/
