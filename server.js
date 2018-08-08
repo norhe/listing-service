@@ -13,8 +13,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 function connectDB() {
   // TODO: add auth later (Vault)
   // require('./config/resolveSrv')(db.db_addr, db.db_port).then( (dsn) => {
-  var db_proxy_addr = 'mongodb://localhost:8001'
-  MongoClient.connect(db_proxy_addr, { useNewUrlParser: true }, function(err, database) {
+  //var db_proxy_addr = 'mongodb://localhost:8001'
+  var dsn = "mongodb://" + db.db_addr + ":" + db.db_port
+  console.log("Connecting to: " + dsn)
+  MongoClient.connect(dsn, { useNewUrlParser: true }, function(err, database) {
     if (err) {
       console.log(err)
       console.log("Waiting 5 seconds and trying again...")
