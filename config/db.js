@@ -1,5 +1,5 @@
 var addr = process.env.DB_URL ? process.env.DB_URL : 'localhost'
-var port = process.env.DB_PORT ? process.env.DB_PORT : '27017'
+var port = process.env.DB_PORT ? process.env.DB_PORT : '8001'
 var name = process.env.DB_NAME ? process.env.DB_NAME : 'bbthe90s'
 var collection = process.env.DB_COLLECTION ? process.env.DB_COLLECTION : 'listings'
 var user = process.env.DB_USER ? process.env.DB_USER : 'mongo'
