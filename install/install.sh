@@ -23,6 +23,7 @@ Type=simple
 User=ubuntu
 ExecStart=/usr/local/bin/envconsul -prefix listing_conf /usr/bin/node /home/ubuntu/src/listing-service/server.js
 Restart=always
+SyslogIdentifier=listing-service
 
 [Install]
 WantedBy=multi-user.target
