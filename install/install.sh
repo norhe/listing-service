@@ -5,8 +5,10 @@ curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
 sudo apt-get install -y nodejs
 
 # install the listing service app
-mkdir /home/ubuntu/src
-cd /home/ubuntu/src
+sudo adduser --disabled-password --gecos "" listing
+
+mkdir /home/listing/src
+cd /home/listing/src
 git clone https://github.com/norhe/listing-service.git
 cd listing-service
 npm install
@@ -20,8 +22,8 @@ After=network.target
 
 [Service]
 Type=simple
-User=ubuntu
-ExecStart=/usr/local/bin/envconsul -prefix listing_conf /usr/bin/node /home/ubuntu/src/listing-service/server.js
+User=listing
+ExecStart=/usr/local/bin/envconsul -prefix listing_conf /usr/bin/node /home/listing/src/listing-service/server.js
 Restart=always
 
 [Install]
