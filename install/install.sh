@@ -10,8 +10,7 @@ sudo adduser --disabled-password --gecos "" listing
 mkdir /home/listing/src
 cd /home/listing/src
 git clone https://github.com/norhe/listing-service.git
-cd listing-service
-sudo npm install
+cd /home/listing/src/listing-service && npm install
 
 # systemd
 cat <<EOF | sudo tee /lib/systemd/system/listing.service
