@@ -11,7 +11,7 @@ mkdir /home/listing/src
 cd /home/listing/src
 git clone https://github.com/norhe/listing-service.git
 cd listing-service
-npm install
+sudo npm install
 
 # systemd
 cat <<EOF | sudo tee /lib/systemd/system/listing.service
@@ -23,7 +23,8 @@ After=network.target
 [Service]
 Type=simple
 User=listing
-ExecStart=/usr/local/bin/envconsul -prefix listing_conf /usr/bin/node /home/listing/src/listing-service/server.js
+WorkingDirectory=/home/ehron/listing-service
+ExecStart=/usr/local/bin/envconsul -prefix listing_conf /usr/bin/npm start
 Restart=always
 SyslogIdentifier=listing-service
 
