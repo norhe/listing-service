@@ -8,7 +8,7 @@ sudo apt-get install -y nodejs
 sudo adduser --disabled-password --gecos "" listing
 
 sudo git clone https://github.com/norhe/listing-service.git /opt/listing-service
-cd /opt/listing-service sudo && npm install
+cd /opt/listing-service && sudo npm install
 sudo chown -R listing:listing /opt/listing-service
 
 # systemd
