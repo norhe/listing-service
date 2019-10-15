@@ -1,3 +1,5 @@
+os = require('os')
+
 module.exports = function(app, db, conf) {
 
   app.get('/listing/healthz', (req, res) => {
