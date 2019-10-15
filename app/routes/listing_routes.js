@@ -25,6 +25,7 @@ module.exports = function(app, db, conf) {
       if (err || null == item) {
         res.send({'error': 'Could not retrieve listing from database'})
       } else {
+        item.unshift("Response provided by " + os.hostname())
         res.send(item)
       }
     })
