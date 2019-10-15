@@ -7,22 +7,20 @@ sudo apt-get install -y nodejs
 # install the listing service app
 sudo adduser --disabled-password --gecos "" listing
 
-mkdir /home/listing/src
-cd /home/listing/src
-git clone https://github.com/norhe/listing-service.git
-cd /home/listing/src/listing-service && npm install
+sudo git clone https://github.com/norhe/listing-service.git /opt/listing-service
+cd /opt/listing-service sudo && npm install
+sudo chown -R listing:listing /opt/listing-service
 
 # systemd
 cat <<EOF | sudo tee /lib/systemd/system/listing.service
 [Unit]
 Description=server.js - Listing service API
-Documentation=https://example.com
 After=network.target
 
 [Service]
 Type=simple
 User=listing
-WorkingDirectory=/home/ehron/listing-service
+WorkingDirectory=/opt/listing-service
 ExecStart=/usr/local/bin/envconsul -prefix listing_conf /usr/bin/npm start
 Restart=always
 SyslogIdentifier=listing-service
