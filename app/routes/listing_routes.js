@@ -23,7 +23,7 @@ module.exports = function(app, db, conf) {
 
   app.get('/listing', (req, res) => {
     console.log("listing")
-    db.collection(conf.collection).find({}, {'_id': false, 'limit':10}).toArray( (err, item) => {
+    db.collection(conf.collection)..find({}, { projection: {_id: 0 }} ).limit(5).toArray( (err, item) => {
       if (err || null == item) {
         res.send({'error': 'Could not retrieve listing from database'})
       } else {
